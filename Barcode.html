@@ -3,16 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Almas Designer | Premium Interior Solutions</title>
+  <title>Almas Designer | We design residential, commercial, hospitals, schools, restaurants & more</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --primary: #8b5a2b;
-      --secondary: #d4a373;
-      --accent: #fefae0;
-      --dark: #3a2c1a;
-      --light: #f9f5f0;
+      --navy: #0a192f;
+      --light-navy: #172a45;
+      --lightest-navy: #303C55;
+      --neon-blue: #64ffda;
+      --neon-pink: #ff2ced;
+      --accent: #ccd6f6;
+      --light: #e6f1ff;
     }
     
     * {
@@ -23,8 +25,7 @@
     
     body {
       font-family: 'Montserrat', sans-serif;
-      background: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center fixed;
-      background-size: cover;
+      background: var(--navy);
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -34,34 +35,135 @@
       overflow-x: hidden;
     }
     
-    body::before {
+    /* Animated gradient background */
+    .gradient-bg {
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        45deg, 
+        var(--navy) 0%, 
+        var(--light-navy) 50%, 
+        var(--navy) 100%
+      );
+      background-size: 400% 400%;
+      animation: gradientMove 15s ease infinite;
+      z-index: -2;
+    }
+    
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    /* Neon grid overlay */
+    .neon-grid {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        linear-gradient(rgba(10, 25, 47, 0.9), rgba(10, 25, 47, 0.9)),
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 L0,100 Z" fill="none" stroke="%23172a45" stroke-width="0.5"/></svg>');
+      background-size: 50px 50px;
+      z-index: -1;
+      opacity: 0.8;
+    }
+    
+    .container {
+      position: relative;
+      background: rgba(10, 25, 47, 0.7);
+      border-radius: 24px;
+      padding: clamp(25px, 5vw, 40px) clamp(20px, 4vw, 30px);
+      box-shadow: 0 0 50px rgba(100, 255, 218, 0.2);
+      width: 100%;
+      max-width: min(450px, 90vw);
+      text-align: center;
+      overflow: hidden;
+      border: 1px solid rgba(100, 255, 218, 0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transform-style: preserve-3d;
+      perspective: 1000px;
+      z-index: 1;
+      margin: 20px 0;
+    }
+    
+    /* Neon border animation */
+    .container::before {
       content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 24px;
+      padding: 2px;
+      background: linear-gradient(135deg, var(--neon-blue), var(--neon-pink));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      animation: neonBorder 4s linear infinite;
+      z-index: -1;
+      pointer-events: none;
+    }
+    
+    @keyframes neonBorder {
+      0% { opacity: 0.7; }
+      50% { opacity: 1; }
+      100% { opacity: 0.7; }
+    }
+    
+    /* Floating particles */
+    .particles {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(58, 44, 26, 0.85);
-      z-index: 0;
+      pointer-events: none;
+      z-index: -1;
     }
     
-    .container {
+    .particle {
+      position: absolute;
+      background: var(--neon-blue);
+      border-radius: 50%;
+      opacity: 0;
+      animation: floatParticle linear infinite;
+    }
+    
+    @keyframes floatParticle {
+      0% { transform: translateY(0) translateX(0); opacity: 0; }
+      10% { opacity: 0.3; }
+      90% { opacity: 0.3; }
+      100% { transform: translateY(-100vh) translateX(20px); opacity: 0; }
+    }
+    
+    .logo {
+      width: clamp(70px, 15vw, 90px);
+      height: clamp(70px, 15vw, 90px);
+      margin: 0 auto clamp(15px, 3vw, 20px);
+      background: linear-gradient(135deg, var(--neon-blue), var(--neon-pink));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--navy);
+      font-size: clamp(32px, 7vw, 42px);
+      font-weight: 700;
+      box-shadow: 0 0 30px rgba(100, 255, 218, 0.5);
+      border: 3px solid var(--light);
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.4);
       position: relative;
-      z-index: 1;
-      background: rgba(249, 245, 240, 0.88);
-      border-radius: 24px;
-      padding: 40px 30px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-      width: 100%;
-      max-width: 450px;
-      text-align: center;
       overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      transform-style: preserve-3d;
-      perspective: 1000px;
     }
     
-    .container::after {
+    .logo::after {
       content: '';
       position: absolute;
       top: -50%;
@@ -69,78 +171,70 @@
       width: 200%;
       height: 200%;
       background: linear-gradient(
-        45deg,
-        transparent 0%,
-        rgba(255, 255, 255, 0.1) 50%,
-        transparent 100%
+        to bottom right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0) 100%
       );
-      animation: shine 6s infinite;
-      z-index: -1;
+      transform: rotate(30deg);
+      animation: shine 5s infinite;
     }
     
     @keyframes shine {
-      0% { transform: rotate(0deg) translate(-30%, -30%); }
-      100% { transform: rotate(360deg) translate(-30%, -30%); }
-    }
-    
-    .logo {
-      width: 80px;
-      height: 80px;
-      margin: 0 auto 15px;
-      background: var(--primary);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--light);
-      font-size: 36px;
-      box-shadow: 0 10px 20px rgba(139, 90, 43, 0.3);
-      border: 3px solid var(--secondary);
-      transition: all 0.5s ease;
+      0% { transform: rotate(30deg) translate(-30%, -30%); }
+      100% { transform: rotate(30deg) translate(30%, 30%); }
     }
     
     .logo:hover {
-      transform: rotate(15deg) scale(1.1);
-      box-shadow: 0 15px 30px rgba(139, 90, 43, 0.5);
+      transform: scale(1.1) rotate(10deg);
+      box-shadow: 0 0 50px rgba(100, 255, 218, 0.8);
     }
     
     h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 28px;
-      color: var(--dark);
-      margin-bottom: 30px;
+      font-size: clamp(24px, 6vw, 32px);
+      color: var(--light);
+      margin-bottom: clamp(10px, 2vw, 15px);
       font-weight: 600;
-      letter-spacing: 0.5px;
+      letter-spacing: 1px;
       position: relative;
       display: inline-block;
+      text-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
     }
     
     h1::after {
       content: '';
       position: absolute;
-      bottom: -8px;
+      bottom: clamp(-8px, -1.5vw, -10px);
       left: 50%;
       transform: translateX(-50%);
-      width: 60px;
+      width: clamp(60px, 15vw, 80px);
       height: 3px;
-      background: var(--secondary);
+      background: linear-gradient(to right, var(--neon-blue), var(--neon-pink));
       border-radius: 3px;
+      box-shadow: 0 0 10px rgba(100, 255, 218, 0.5);
     }
     
     .subtitle {
-      color: var(--primary);
-      font-size: 14px;
-      margin-bottom: 30px;
-      letter-spacing: 1px;
+      color: var(--neon-blue);
+      font-size: clamp(12px, 3vw, 14px);
+      margin-bottom: clamp(20px, 5vw, 30px);
+      letter-spacing: 2px;
       text-transform: uppercase;
       font-weight: 600;
+      animation: subtitleGlow 3s ease-in-out infinite alternate;
+    }
+    
+    @keyframes subtitleGlow {
+      from { text-shadow: 0 0 5px rgba(100, 255, 218, 0.5); }
+      to { text-shadow: 0 0 15px rgba(100, 255, 218, 0.8); }
     }
     
     .button-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 15px;
-      margin-top: 25px;
+      gap: clamp(12px, 3vw, 18px);
+      margin-top: clamp(20px, 5vw, 30px);
     }
     
     .button {
@@ -148,18 +242,18 @@
       align-items: center;
       justify-content: flex-start;
       text-decoration: none;
-      background: rgba(255, 255, 255, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.8);
+      background: rgba(23, 42, 69, 0.7);
+      border: 1px solid rgba(100, 255, 218, 0.1);
       border-radius: 12px;
-      padding: 18px 25px;
-      font-size: 16px;
-      color: var(--dark);
+      padding: clamp(14px, 3vw, 18px) clamp(18px, 4vw, 25px);
+      font-size: clamp(14px, 3.5vw, 16px);
+      color: var(--light);
       font-weight: 600;
       transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       backdrop-filter: blur(5px);
       position: relative;
       overflow: hidden;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
     
     .button::before {
@@ -169,15 +263,15 @@
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-      transition: 0.5s;
+      background: linear-gradient(90deg, transparent, rgba(100, 255, 218, 0.1), transparent);
+      transition: 0.6s;
     }
     
     .button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 15px 30px rgba(139, 90, 43, 0.2);
-      background: rgba(255, 255, 255, 0.9);
-      color: var(--primary);
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(100, 255, 218, 0.2);
+      background: rgba(23, 42, 69, 0.9);
+      border-color: var(--neon-blue);
     }
     
     .button:hover::before {
@@ -185,23 +279,24 @@
     }
     
     .button-icon {
-      width: 40px;
-      height: 40px;
-      background: var(--primary);
+      width: clamp(36px, 8vw, 44px);
+      height: clamp(36px, 8vw, 44px);
+      background: linear-gradient(135deg, var(--neon-blue), var(--neon-pink));
       border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-right: 15px;
-      color: white;
-      font-size: 18px;
+      margin-right: clamp(10px, 3vw, 15px);
+      color: var(--navy);
+      font-size: clamp(16px, 4vw, 20px);
       flex-shrink: 0;
       transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
     }
     
     .button:hover .button-icon {
-      background: var(--secondary);
-      transform: rotate(10deg);
+      transform: rotate(15deg) scale(1.1);
+      box-shadow: 0 0 20px rgba(100, 255, 218, 0.6);
     }
     
     .button-text {
@@ -211,144 +306,114 @@
     
     .button-label {
       display: block;
-      font-size: 14px;
-      color: var(--primary);
+      font-size: clamp(11px, 2.5vw, 13px);
+      color: var(--neon-blue);
       font-weight: 400;
-      margin-top: 2px;
-      opacity: 0.8;
-    }
-    
-    .footer {
-      margin-top: 30px;
-      font-size: 12px;
-      color: var(--primary);
-      opacity: 0.7;
+      margin-top: clamp(2px, 0.5vw, 3px);
       letter-spacing: 0.5px;
     }
     
-    /* New badge for Behance link */
     .badge {
       position: absolute;
       top: -10px;
       right: -10px;
-      background: #1769ff;
-      color: white;
-      font-size: 10px;
-      padding: 3px 8px;
+      background: linear-gradient(135deg, var(--neon-pink), #ff6b6b);
+      color: var(--navy);
+      font-size: clamp(8px, 2vw, 10px);
+      padding: 3px clamp(6px, 2vw, 10px);
       border-radius: 20px;
       font-weight: 700;
       transform: rotate(15deg);
-      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 3px 15px rgba(255, 44, 237, 0.4);
+      animation: badgePulse 2s infinite;
     }
     
+    @keyframes badgePulse {
+      0% { transform: rotate(15deg) scale(1); }
+      50% { transform: rotate(15deg) scale(1.1); }
+      100% { transform: rotate(15deg) scale(1); }
+    }
+    
+    .footer {
+      margin-top: clamp(25px, 6vw, 40px);
+      font-size: clamp(10px, 2.5vw, 12px);
+      color: var(--neon-blue);
+      letter-spacing: 1px;
+      position: relative;
+    }
+    
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: clamp(-10px, -3vw, -15px);
+      left: 50%;
+      transform: translateX(-50%);
+      width: clamp(80px, 20vw, 100px);
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--neon-blue), transparent);
+    }
+    
+    /* Mobile-specific adjustments */
     @media (max-width: 480px) {
       .container {
-        padding: 30px 20px;
+        border-radius: 18px;
       }
       
-      h1 {
-        font-size: 24px;
+      .container::before {
+        border-radius: 18px;
       }
       
       .button {
-        padding: 15px 20px;
+        padding: 14px 16px;
       }
       
       .button-icon {
-        width: 36px;
-        height: 36px;
-        font-size: 16px;
         margin-right: 12px;
       }
     }
     
-    /* Floating elements animation */
-    .floating-elements {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-      z-index: -1;
-      overflow: hidden;
-    }
-    
-    .floating-element {
-      position: absolute;
-      opacity: 0.1;
-      animation: float 15s infinite linear;
-    }
-    
-    @keyframes float {
-      0% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-20px) rotate(180deg); }
-      100% { transform: translateY(0) rotate(360deg); }
-    }
-    
-    /* Add decorative elements */
-    .decorative-corner {
-      position: absolute;
-      width: 80px;
-      height: 80px;
-      border-width: 3px;
-      border-style: solid;
-      border-color: var(--secondary) transparent transparent var(--secondary);
-      border-radius: 12px 0 0 0;
-      top: 0;
-      left: 0;
-      opacity: 0.5;
-    }
-    
-    .decorative-corner.bottom-right {
-      left: auto;
-      top: auto;
-      right: 0;
-      bottom: 0;
-      border-color: transparent var(--secondary) var(--secondary) transparent;
-    }
-    
-    /* Ripple effect */
-    .ripple {
-      position: absolute;
-      background: rgba(255, 255, 255, 0.6);
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      border-radius: 50%;
-      animation: rippleEffect 1s linear;
-    }
-    
-    @keyframes rippleEffect {
-      0% { width: 0; height: 0; opacity: 0.8; }
-      100% { width: 500px; height: 500px; opacity: 0; }
+    /* Desktop enhancements */
+    @media (min-width: 1024px) {
+      .container {
+        max-width: 480px;
+      }
+      
+      .button:hover {
+        transform: translateY(-8px);
+      }
     }
   </style>
 </head>
 <body>
+  <div class="gradient-bg"></div>
+  <div class="neon-grid"></div>
+  <div class="particles" id="particles"></div>
+  
   <div class="container">
-    <div class="floating-elements">
-      <div class="floating-element" style="top:10%;left:10%;font-size:24px;">✧</div>
-      <div class="floating-element" style="top:70%;left:80%;font-size:20px;">✦</div>
-      <div class="floating-element" style="top:30%;left:85%;font-size:18px;">✧</div>
-      <div class="floating-element" style="top:85%;left:15%;font-size:22px;">✦</div>
-    </div>
-    
-    <div class="decorative-corner"></div>
-    <div class="decorative-corner bottom-right"></div>
-    
     <div class="logo">A</div>
     <h1>Almas Designer</h1>
-    <p class="subtitle">Premium Interior Solutions</p>
+    <p class="subtitle">We design residential, commercial, hospitals, schools, restaurants & more</p>
     
     <div class="button-grid">
       <a href="tel:+919966622616" class="button">
         <div class="button-icon"><i class="fas fa-phone-alt"></i></div>
         <div class="button-text">
           +91 99666 22616
-          <span class="button-label">Tap to call directly</span>
+          <span class="button-label">Direct Call Connection</span>
         </div>
       </a>
       
+      
+      
+
+      <a href="https://almasdesigner.com/AlmasDesignerContact.vcf" class="button">
+        <div class="button-icon"><i class="fas fa-user-plus"></i></div>
+        <div class="button-text">
+          Save Contact
+          <span class="button-label">Add to your contacts</span>
+        </div>
+      </a>
+
       <a href="upi://pay?pa=9966622616@pthdfc&pn=Almas%20Designer" class="button">
         <div class="button-icon"><i class="fas fa-rupee-sign"></i></div>
         <div class="button-text">
@@ -356,29 +421,29 @@
           <span class="button-label">9966622616@pthdfc</span>
         </div>
       </a>
-      
+
+
       <a href="https://wa.me/919966622616?text=Hi%20Almas%20Designer,%20I'm%20interested%20in%20your%20services" class="button">
         <div class="button-icon"><i class="fab fa-whatsapp"></i></div>
         <div class="button-text">
           WhatsApp Chat
-          <span class="button-label">Quick response guaranteed</span>
+          <span class="button-label">Instant Response</span>
         </div>
       </a>
       
       <a href="https://www.almasdesigner.com" class="button">
         <div class="button-icon"><i class="fas fa-globe"></i></div>
         <div class="button-text">
-          Our Portfolio
-          <span class="button-label">View our latest projects</span>
+          Portfolio Website
+          <span class="button-label">Our Signature Projects</span>
         </div>
       </a>
       
       <a href="https://www.behance.net/AbdulDesignStudio6" class="button" style="position: relative;">
-        <div class="badge">NEW</div>
-        <div class="button-icon"><i class="fab fa-behance"></i></div>
+        <div class="button-icon"><i class="fab fa-instagram"></i></div>
         <div class="button-text">
           Behance Portfolio
-          <span class="button-label">@AbdulDesignStudio6</span>
+          <span class="button-label">Creative Showcase</span>
         </div>
       </a>
       
@@ -399,32 +464,74 @@
       </a>
     </div>
     
-    <p class="footer">Crafting Spaces, Creating Dreams</p>
+    <p class="footer">DESIGNING DREAMS • CRAFTING LUXURY</p>
   </div>
   
   <script>
-    // Add subtle tilt effect on mouse move
-    document.querySelector('.container').addEventListener('mousemove', (e) => {
-      const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
-      const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
-      e.currentTarget.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-    });
+    // Create floating particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = window.innerWidth < 768 ? 15 : 30;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        
+        // Random properties
+        const size = Math.random() * (window.innerWidth < 768 ? 3 : 5) + 2;
+        const posX = Math.random() * 100;
+        const duration = Math.random() * 20 + 10;
+        const delay = Math.random() * 20;
+        
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${posX}%`;
+        particle.style.bottom = `-${size}px`;
+        particle.style.animationDuration = `${duration}s`;
+        particle.style.animationDelay = `${delay}s`;
+        
+        // Random neon color
+        const colors = ['#64ffda', '#ff2ced', '#ff6b6b', '#57cbff'];
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        particle.style.background = randomColor;
+        
+        particlesContainer.appendChild(particle);
+      }
+    }
     
-    // Reset tilt when mouse leaves
-    document.querySelector('.container').addEventListener('mouseleave', (e) => {
-      e.currentTarget.style.transform = 'rotateY(0deg) rotateX(0deg)';
-    });
+    // Initialize particles
+    createParticles();
     
-    // Add ripple effect to buttons
+    // 3D tilt effect (only for desktop)
+    if (window.innerWidth > 768) {
+      const container = document.querySelector('.container');
+      container.addEventListener('mousemove', (e) => {
+        const xAxis = (window.innerWidth / 2 - e.pageX) / 20;
+        const yAxis = (window.innerHeight / 2 - e.pageY) / 20;
+        container.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+      });
+      
+      container.addEventListener('mouseleave', () => {
+        container.style.transform = 'rotateY(0deg) rotateX(0deg)';
+      });
+    }
+    
+    // Ripple effect for buttons
     document.querySelectorAll('.button').forEach(button => {
       button.addEventListener('click', function(e) {
-        const x = e.pageX - this.getBoundingClientRect().left;
-        const y = e.pageY - this.getBoundingClientRect().top;
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
         
         const ripple = document.createElement('span');
         ripple.style.left = `${x}px`;
         ripple.style.top = `${y}px`;
-        ripple.classList.add('ripple');
+        ripple.style.background = 'rgba(100, 255, 218, 0.3)';
+        ripple.style.position = 'absolute';
+        ripple.style.borderRadius = '50%';
+        ripple.style.pointerEvents = 'none';
+        ripple.style.transform = 'translate(-50%, -50%)';
+        ripple.style.animation = 'rippleEffect 1s linear';
         
         this.appendChild(ripple);
         
@@ -434,9 +541,33 @@
       });
     });
     
-    // Add slight delay to button animations for better visual effect
+    // Add ripple animation to CSS
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes rippleEffect {
+        0% { width: 0; height: 0; opacity: 0.8; }
+        100% { width: 500px; height: 500px; opacity: 0; }
+      }
+    `;
+    document.head.appendChild(style);
+    
+    // Sequential animation for buttons
     document.querySelectorAll('.button').forEach((button, index) => {
       button.style.transitionDelay = `${index * 0.05}s`;
+      button.style.opacity = '0';
+      button.style.transform = 'translateY(20px)';
+      
+      setTimeout(() => {
+        button.style.opacity = '1';
+        button.style.transform = 'translateY(0)';
+      }, 500 + (index * 50));
+    });
+    
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      const particles = document.getElementById('particles');
+      particles.innerHTML = '';
+      createParticles();
     });
   </script>
 </body>
